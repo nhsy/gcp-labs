@@ -1,4 +1,4 @@
-# gcp-glb-trafficdirector-gke
+# Labs
 
 # Description
 Terraform state bucket and workspaces are utilised to allow multiple deployments.
@@ -26,7 +26,6 @@ This stage deploys the following components:
 Create the file named bootstrap/bootstrap.auto.tfvars and populate variables accordingly.
 ```hcl-terraform
 region                  = "europe-west2"
-region_failover         = "europe-west1"
 project_id              = "gcp-project-id"
 project_name            = "my-project"
 project_sponsor         = "joe-bloggs"
@@ -39,7 +38,6 @@ creator                 = "owner"
 Create the file named vars/ws-dev1.tfvars and populate variables accordingly.
 ```hcl-terraform
 region                  = "europe-west2"
-region_failover         = "europe-west1"
 project_id              = "gcp-project-id"
 project_name            = "my-project"
 project_sponsor         = "joe-bloggs"

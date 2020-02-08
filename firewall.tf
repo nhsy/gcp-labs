@@ -29,39 +29,9 @@ resource "google_compute_firewall" "proxy_health_check" {
 
   allow {
     protocol = "tcp"
-    ports    = [8118]
+    ports    = [3128]
   }
 
   source_ranges = var.health_check_source_cidrs
   target_tags   = ["proxy"]
-}
-
-resource "google_compute_firewall" "td_health_check" {
-  name        = "td-healthcheck-${random_id.this.hex}"
-  network     = module.vpc.name
-  description = "Allow inbound health probes from GCP"
-  direction   = "INGRESS"
-
-  allow {
-    protocol = "tcp"
-    //ports    = [80]
-  }
-
-  source_ranges = var.health_check_source_cidrs
-  target_tags   = ["td-proxy"]
-}
-
-resource "google_compute_firewall" "td_glb" {
-  name        = "td-glb-${random_id.this.hex}"
-  network     = module.vpc.name
-  description = "Allow inbound traffic from glb"
-  direction   = "INGRESS"
-
-  allow {
-    protocol = "tcp"
-    //ports    = [80]
-  }
-
-  source_ranges = var.glb_source_cidrs
-  target_tags   = ["td-proxy"]
 }

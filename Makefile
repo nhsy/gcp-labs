@@ -1,4 +1,4 @@
-.PHONY= help setup init plan apply apply2 destroy destroy-target refresh clean validate update
+.PHONY= help setup init plan apply apply2 destroy destroy-target refresh clean validate update all
 .ONESHELL:
 SHELL := /bin/bash
 WS ?= dev1
@@ -167,7 +167,9 @@ clean:
 	@echo "cleaning ..."
 	-$(TERRAFORM_BIN) workspace select default
 	-$(TERRAFORM_BIN) workspace delete $(WS)
-	-rm -rf .terraform/
-	-rm -rf terraform.tfstate*
-	-rm *.out
-	-echo cleaning complete
+	-rm -rf .terraform/ || true
+	-rm -rf terraform.tfstate* || true
+	-rm *.out || true
+	@echo cleaning complete
+
+all: init plan apply

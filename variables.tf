@@ -11,7 +11,7 @@ variable "vpc_prefix" {
 
 variable "network_cidr" {
   type        = string
-  default     = "10.0.0.0/16"
+  default     = "10.128.0.0/16"
   description = "Network CIDR"
 }
 
@@ -83,8 +83,6 @@ variable "machine_type" {
   type = map(string)
   default = {
     automation : "n1-standard-1"
-    gke : "n1-standard-2"
-    td-proxy : "n1-standard-1"
   }
   description = "Machine type"
 }
@@ -140,7 +138,7 @@ variable "health_check_source_cidrs" {
 
 variable "compute_service_account_prefix" {
   type        = string
-  default     = "compute-sa"
+  default     = "compute"
   description = "Service account for compute instances"
 }
 

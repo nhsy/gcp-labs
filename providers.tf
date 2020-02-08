@@ -13,9 +13,9 @@ provider "google-beta" {
 }
 
 provider "random" {
-    version = "~> 2.2"
+  version = "~> 2.2"
 }
 
 provider "template" {
-    version = "~> 2.1"
+  version = "~> 2.1"
 }

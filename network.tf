@@ -19,20 +19,20 @@ module "private_subnet" {
   source = "./modules/gcp-subnet"
 
   enable_flow_logs         = var.enable_flow_logs
-  ip_cidr_range            = cidrsubnet(var.network_cidr, 8, 1)
+  ip_cidr_range            = cidrsubnet(var.network_cidr, 8, 128)
   network                  = module.vpc.name
   private_ip_google_access = true
   region                   = var.region
-  subnet_name              = format("%s-%s", "private-net", random_id.this.hex)
+  subnet_name              = format("%s-%s", "private", random_id.this.hex)
 }
 
 module "public_subnet" {
   source = "./modules/gcp-subnet"
 
   enable_flow_logs         = var.enable_flow_logs
-  ip_cidr_range            = cidrsubnet(var.network_cidr, 0, 1)
+  ip_cidr_range            = cidrsubnet(var.network_cidr, 8, 1)
   network                  = module.vpc.name
   private_ip_google_access = true
   region                   = var.region
-  subnet_name              = format("%s-%s", "public-net", random_id.this.hex)
+  subnet_name              = format("%s-%s", "public", random_id.this.hex)
 }
