@@ -13,7 +13,7 @@
 # Terraform plan outputs
 *.out
 # bootstrap tfvars
-bootstrap.tfvars
+bootstrap.auto.tfvars
 # Workspace tfvars
 ws-*.tfvars
 # Crash log files
