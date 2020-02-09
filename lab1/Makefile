@@ -7,6 +7,7 @@ OS ?=linux
 PLAN_FILE=plan-$(WS).out
 TERRAFORM_BIN=terraform
 TERRAFORM_BUCKET ?=$(shell cat bootstrap/terraform_bucket_name.out)
+COMMON_TFVARS=vars/common.tfvars
 WS_TFVARS=vars/ws-$(WS).tfvars
 ZONE ?= europe-west2-a
 
@@ -54,6 +55,7 @@ bootstrap-plan: bootstrap-init
 	$(TERRAFORM_BIN) plan \
 		-input=false \
 		-refresh=true \
+		-var-file="../$(COMMON_TFVARS)" \
 		-out=bootstrap.out
 
 bootstrap-apply:
@@ -75,7 +77,8 @@ bootstrap-destroy:
 	@echo "Destroying bootstrap terraform ..."
 	@cd bootstrap  && \
 	$(TERRAFORM_BIN) destroy \
-		-input=false && \
+		-input=false \
+		-var-file="../$(COMMON_TFVARS)" && \
 	rm *.out
 
 bootstrap-clean:
@@ -91,6 +94,7 @@ init: set-env
 	@$(TERRAFORM_BIN) init \
 		-backend=true \
 		-backend-config="bucket=$(TERRAFORM_BUCKET)" \
+		-var-file="$(COMMON_TFVARS)" \
 		-var-file="$(WS_TFVARS)"
 	@echo "Switching to workspace $(WS)"
 	@$(TERRAFORM_BIN) workspace select $(WS) || $(TERRAFORM_BIN) workspace new $(WS)
@@ -119,6 +123,7 @@ plan: set-env prep
 	@$(TERRAFORM_BIN) plan \
 		-input=false \
 		-refresh=true \
+		-var-file="$(COMMON_TFVARS)" \
 		-var-file="$(WS_TFVARS)" \
 		-var kms_key="$(KMS_KEY)" \
 		-out=$(PLAN_FILE)
@@ -135,7 +140,8 @@ apply2: set-env prep
 	@$(TERRAFORM_BIN) apply \
 		-input=false \
 		-refresh=true \
-		-var-file="$(WS_TFVARS)" \
+		-var-file="$(COMMON_TFVARS)" \
+		-var-file="$(WS_TFVARS)"
 
 destroy: set-env prep
 	@echo "destroy ..."
@@ -143,6 +149,7 @@ destroy: set-env prep
 	@$(TERRAFORM_BIN) destroy \
 		-input=false \
 		-refresh=true \
+		-var-file="$(COMMON_TFVARS)" \
 		-var-file="$(WS_TFVARS)"
 
 destroy-target: set-env prep
@@ -151,6 +158,7 @@ destroy-target: set-env prep
 	@$(TERRAFORM_BIN) destroy \
 		-input=false \
 		-refresh=true \
+		-var-file="$(COMMON_TFVARS)" \
 		-var-file="$(WS_TFVARS)" \
 		-target $(RESOURCE)
 

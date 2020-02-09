@@ -37,20 +37,7 @@ creator                 = "owner"
 
 Create the file named vars/ws-dev1.tfvars and populate variables accordingly.
 ```hcl-terraform
-region                  = "europe-west2"
-project_id              = "gcp-project-id"
-project_name            = "my-project"
-project_sponsor         = "joe-bloggs"
-project_technical_lead  = "joe-bloggs"
-cost_code               = "123456"
-business_name           = "dept-1"
-creator                 = "owner"
 
-subnetwork = {
-  name         = "subnet"
-  cidr         = "10.0.32.0/24"
-
-}
 ```
 
 ## Bootstrap

@@ -9,7 +9,7 @@ resource "random_id" "this" {
 # Create common labels
 ###
 module "labels" {
-  source = "./modules/gcp-labels"
+  source = "../modules/gcp-labels"
 
   project_id             = var.project_id
   environment            = var.environment

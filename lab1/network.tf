@@ -2,7 +2,7 @@
 # Create VPC
 ###
 module "vpc" {
-  source = "./modules/gcp-vpc"
+  source = "../modules/gcp-vpc"
 
   common_labels      = module.labels.rendered
   create_nat_gateway = var.create_nat_gateway
@@ -16,7 +16,7 @@ module "vpc" {
 # Create subnetworks
 ###
 module "private_subnet" {
-  source = "./modules/gcp-subnet"
+  source = "../modules/gcp-subnet"
 
   enable_flow_logs         = var.enable_flow_logs
   ip_cidr_range            = cidrsubnet(var.network_cidr, 8, 128)
@@ -27,7 +27,7 @@ module "private_subnet" {
 }
 
 module "public_subnet" {
-  source = "./modules/gcp-subnet"
+  source = "../modules/gcp-subnet"
 
   enable_flow_logs         = var.enable_flow_logs
   ip_cidr_range            = cidrsubnet(var.network_cidr, 8, 1)

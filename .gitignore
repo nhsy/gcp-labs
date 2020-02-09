@@ -12,8 +12,8 @@
 **/terraform.tfstate.d/*
 # Terraform plan outputs
 *.out
-# bootstrap tfvars
-bootstrap.auto.tfvars
+# Common tfvars
+common.tfvars
 # Workspace tfvars
 ws-*.tfvars
 # Crash log files

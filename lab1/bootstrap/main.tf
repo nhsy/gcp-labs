@@ -16,7 +16,7 @@ resource "random_id" "this" {
 # Create common labels
 ###
 module "labels" {
-  source = "../modules/gcp-labels"
+  source = "../../modules/gcp-labels"
 
   business_name          = var.business_name
   creator                = var.creator

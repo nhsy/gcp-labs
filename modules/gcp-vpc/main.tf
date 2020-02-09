@@ -5,14 +5,14 @@
 * | Name | Prefix | Type |
 * | ---- | ---- | ---- |
 * | private | /24 | Internal |
-* | gke | /22 | Internal |
+* | public | /24 | External |
 *
 */
 
 ###
 # Create VPC
 ###
-resource "google_compute_network" "vpc" {
+resource "google_compute_network" "this" {
   name                    = var.vpc_name
   auto_create_subnetworks = false
   routing_mode            = "REGIONAL"
@@ -21,9 +21,9 @@ resource "google_compute_network" "vpc" {
 ###
 # Create additional Networking Resources
 ###
-resource "google_compute_router" "router" {
+resource "google_compute_router" "this" {
   name    = var.router_name
-  network = google_compute_network.vpc.self_link
+  network = google_compute_network.this.self_link
   project = var.project_id
   region  = var.region
 }
@@ -34,6 +34,6 @@ resource "google_compute_router_nat" "nat" {
   nat_ip_allocate_option             = "AUTO_ONLY"
   project                            = var.project_id
   region                             = var.region
-  router                             = google_compute_router.router.name
+  router                             = google_compute_router.this.name
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
 }
