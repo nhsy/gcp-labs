@@ -21,9 +21,8 @@ This stage deploys the following components:
 * Subnetworks
 * Firewall Rules
 
-
 ## Pre-requisites
-Create the file named bootstrap/bootstrap.auto.tfvars and populate variables accordingly.
+Create the file named vars/common.tfvars and populate variables accordingly.
 ```hcl-terraform
 region                  = "europe-west2"
 project_id              = "gcp-project-id"
