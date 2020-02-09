@@ -3,6 +3,9 @@ provider "google" {
 
   region  = var.region
   project = var.project_id
+
+  access_token = data.google_service_account_access_token.default.access_token
+
 }
 
 provider "google-beta" {
@@ -10,6 +13,8 @@ provider "google-beta" {
 
   region  = var.region
   project = var.project_id
+
+  access_token = data.google_service_account_access_token.default.access_token
 }
 
 provider "random" {

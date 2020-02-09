@@ -55,7 +55,27 @@ variable "kms_crypto_key_prefix" {
   default = "kms-crypto"
 }
 
-variable "iam_user_email" {
+variable "impersonate_user_email" {
   type        = string
-  description = "IAM user email account"
+  description = "Impersonate user email"
+}
+
+variable "automation_service_account_prefix" {
+  type        = string
+  default     = "automation"
+  description = "Automation service account prefix"
+}
+
+variable "automation_service_account_roles" {
+  type        = list(string)
+  description = "Automation service account roles"
+  default = [
+    "roles/compute.instanceAdmin.v1",
+    "roles/compute.networkAdmin",
+    "roles/compute.securityAdmin",
+    "roles/compute.storageAdmin",
+    "roles/iam.serviceAccountAdmin",
+    "roles/resourcemanager.projectIamAdmin",
+    "roles/storage.admin"
+  ]
 }

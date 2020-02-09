@@ -1,27 +1,23 @@
-# Lab 1 
+# Lab 1 - Segregated Environment
 
 # Description
-The terraform script consists of 2 stages:
-1. Bootstrap deployment
-1. Component deployment
+The purpose of this lab is to create a segregated environment with no direct internet connectivity in the private subnet.  
 
+The user's OAuth2 credentials are used to impersonate the automation service account and create terraform resources.
+ 
+The terraform script consists of multiple deployment stages:
+1. Bootstrap
+1. Stage 2
 
 ## Architecture
-The diagram below describes the architecture, consisting of the following:
+The diagram below describes the architecture, consisting of the following resources:
 * Bastion GCE instance
 * Proxy GCE managed instance group
 * Management GCE instance
-* Cloud DNS
-* Firewall Rules
 
 ![diagram](docs/lab1.png)
 
 # Usage
-## Booststrap
-This stage deploys the following components:
-* GCS Bucket for terraform state
-* KMS Key Ring
-* KMS Key Crypto Key
 
 ## Pre-requisites
 Create the file named vars/common.tfvars and populate variables accordingly.
@@ -34,20 +30,19 @@ project_technical_lead  = "joe-bloggs"
 cost_code               = "123456"
 business_name           = "dept-1"
 creator                 = "owner"
-iam_user_email          = "user@domain"
+impersonate_user_email  = "user@domain"
 ```
 
 Create the file named vars/ws-dev1.tfvars and populate variables accordingly.
 ```hcl
-
+# ws-dev1.tfvars
 ```
 
-## Bootstrap
-Make sure the following essential APIs are enabled on your project:
-
+Enable the APIs below on your project:
 ```shell script
 for api in \
     cloudkms.googleapis.com \
+    cloudresourcemanager.googleapis.com \
     compute.googleapis.com \
     iam.googleapis.com \
     iap.googleapis.com \
@@ -56,8 +51,14 @@ for api in \
         echo enabling $api; \
         gcloud services enable $api; \
     done 
-
 ```
+
+## Bootstrap
+This stage deploys the following components:
+* Automation service account
+* GCS Bucket for terraform state
+* KMS Key Ring
+* KMS Key Crypto Key
 
 The commands below will download the required terraform executable and initialise the terraform state bucket.
 ```shell script
@@ -66,7 +67,7 @@ make bootstrap-plan
 make bootstrap-apply
 ```
 
-## Component Deployment
+## Stage 2 Deployment
 The commands below will deploy the infrastructure components to GCP.
 ```shell script
 make init 
@@ -74,23 +75,11 @@ make plan
 make apply
 ```
 
-## Component Deletion
+## Stage 2 Deletion
 The commands below will destroy the infrastructure components in GCP.
 ```shell script
 make destroy
  ```
-
-
-## (Mostly) complete deletion of all resources
-The commands will destroy the Component Deployment as well as the bootstrap deployment
-```shell script
-make destroy
-make clean
-make bootstrap-destroy
-make bootstrap-clean
-```
-
-NOTE: This process is mostly complete as the Cloud KMS keys and key rings are left behind as currently there isn't a process to delete all key versions
 
 ## Deploy into another terraform workspace
 Create the file named vars/ws-*dev2*.tfvars and populate variables accordingly.
@@ -101,6 +90,16 @@ WS=dev2 make init
 WS=dev2 make plan 
 WS=dev2 make apply
 ```
+
+## (Mostly) complete deletion of all resources
+The commands will destroy the Component Deployment as well as the bootstrap deployment
+```shell script
+make destroy
+make clean
+make bootstrap-destroy
+make bootstrap-clean
+```
+NOTE: This process is mostly complete as the Cloud KMS keys and key rings are left behind as currently there isn't a process to delete all key versions
 
 # Exercise
 Details of the lab exercise are detailed in [EXERCISE.md](EXERCISE.md).
@@ -119,24 +118,23 @@ Details of the lab exercise are detailed in [EXERCISE.md](EXERCISE.md).
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
+| automation\_service\_account | Automation service account | `string` | n/a | yes |
 | business\_name | n/a | `string` | n/a | yes |
 | cost\_code | n/a | `string` | n/a | yes |
 | creator | Creator name | `string` | n/a | yes |
-| iam\_user\_email | IAM user email account | `string` | n/a | yes |
+| impersonate\_user\_email | Impersonate user email | `string` | n/a | yes |
 | kms\_key | KMS key URI | `string` | n/a | yes |
 | project\_id | Project ID to create resources | `string` | n/a | yes |
 | project\_name | n/a | `string` | n/a | yes |
 | project\_sponsor | n/a | `string` | n/a | yes |
 | project\_technical\_lead | n/a | `string` | n/a | yes |
 | region | Region to create resources | `string` | n/a | yes |
-| autohealing\_policies | n/a | <pre>list(object({<br>    initial_delay_sec = number<br>  }))</pre> | `[]` | no |
-| automation\_prefix | Automation name prefix | `string` | `"automation"` | no |
 | bucket\_prefix | Bucket name prefix | `string` | `"transfer"` | no |
-| compute\_service\_account\_prefix | Service account for compute instances | `string` | `"compute"` | no |
 | create\_nat\_gateway | Create nat gatway for internal servers | `bool` | `false` | no |
 | enable\_flow\_logs | Enable flow logging | `string` | `true` | no |
 | environment | Environment name | `string` | `"dev"` | no |
-| glb\_source\_cidrs | GLB ingress IP source cidrs | `list(string)` | <pre>[<br>  "130.211.0.0/22",<br>  "35.191.0.0/16"<br>]</pre> | no |
+| gce\_service\_account\_prefix | GCE service account prefix | `string` | `"gce"` | no |
+| gce\_service\_account\_roles | GCE service account roles | `list(string)` | <pre>[<br>  "roles/logging.logWriter",<br>  "roles/monitoring.metricWriter",<br>  "roles/monitoring.viewer"<br>]</pre> | no |
 | health\_check\_source\_cidrs | Health check cidrs | `list(string)` | <pre>[<br>  "35.191.0.0/16",<br>  "130.211.0.0/22"<br>]</pre> | no |
 | iap\_source\_cidrs | IAP cidrs | `list(string)` | <pre>[<br>  "35.235.240.0/20"<br>]</pre> | no |
 | mgmt\_source\_cidr | Management CIDR for remote access | `list(string)` | `[]` | no |
@@ -148,6 +146,8 @@ Details of the lab exercise are detailed in [EXERCISE.md](EXERCISE.md).
 
 | Name | Description |
 |------|-------------|
+| automation\_service\_account | n/a |
+| impersonate\_service\_account | n/a |
 | labels | n/a |
 | private\_subnet\_ip\_cidr\_range | n/a |
 | private\_subnet\_name | n/a |
@@ -155,4 +155,3 @@ Details of the lab exercise are detailed in [EXERCISE.md](EXERCISE.md).
 | public\_subnet\_name | n/a |
 | transfer\_bucket\_name | n/a |
 | vpc\_name | n/a |
-
