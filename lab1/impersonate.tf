@@ -46,6 +46,7 @@ module "service_account-iam-bindings" {
   }
 }
 
+/*
 resource "google_storage_bucket" "impersonate" {
   provider           = google.impersonated
   name               = format("%s-%s", local.bucket_name, "impersonate")
@@ -62,3 +63,8 @@ resource "google_storage_bucket" "impersonate" {
     ignore_changes = [labels]
   }
 }
+*/
+
+# TODO add automation service account to bootstrap
+# TODO grant automation service account runs permissions to bootstrap
+# TODO update google providers to impersonate automation service account

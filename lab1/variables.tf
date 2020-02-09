@@ -69,7 +69,6 @@ variable "mgmt_source_cidr" {
 
 variable "kms_key" {
   type        = string
-  default     = null
   description = "KMS key URI"
 }
 

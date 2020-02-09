@@ -162,7 +162,8 @@ destroy: set-env prep
 		-input=false \
 		-refresh=true \
 		-var-file="$(COMMON_TFVARS)" \
-		-var-file="$(WS_TFVARS)"
+		-var-file="$(WS_TFVARS)" \
+		-var kms_key="$(KMS_KEY)"
 
 destroy-target: set-env prep
 	@echo "$@ ..."
