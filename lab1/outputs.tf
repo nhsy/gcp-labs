@@ -22,7 +22,9 @@ output "public_subnet_ip_cidr_range" {
   value = module.public_subnet.ip_cidr_range
 }
 
-
+output "transfer_bucket_name" {
+  value = google_storage_bucket.transfer.name
+}
 
 //output "automation_name" {
 //  value = module.automation.name

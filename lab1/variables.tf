@@ -174,3 +174,9 @@ variable "glb_source_cidrs" {
   default     = ["130.211.0.0/22", "35.191.0.0/16"]
   description = "GLB ingress IP source cidrs"
 }
+
+variable "bucket_prefix" {
+  type        = string
+  default     = "transfer"
+  description = "Bucket name prefix"
+}
