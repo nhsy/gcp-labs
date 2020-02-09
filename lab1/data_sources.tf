@@ -13,7 +13,3 @@ data "google_compute_image" "centos-7" {
   project = "centos-cloud"
 }
 
-data "template_file" "automation_startup_script" {
-  template = file(format("files/%s", var.automation_startup_filename))
-}
-

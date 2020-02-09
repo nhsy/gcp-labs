@@ -31,6 +31,7 @@ locals {
   automation_name         = format("%s-%s", var.automation_prefix, random_id.this.hex)
   compute_service_account = format("%s-%s", var.compute_service_account_prefix, random_id.this.hex)
   bucket_name             = format("%s-%s", var.bucket_prefix, random_id.this.hex)
+  workstation_ip          = ["${chomp(data.http.workstation_ip.body)}/32"]
 
   common_metadata = {
     environment = var.environment

@@ -111,9 +111,9 @@ The main steps to be followed are listed below:
 1. SSH into the bastion instance
 1. Use the bastion instance as a jumpserver (ssh -J) to SSH into the management instance
 1. Setup management instance for terraform
-1. Deploy compute instance from management instance using terraform
+1. Deploy compute instance to private subnet from management instance using terraform
 
-*Note:* Additional steps such as firewall rules have not been listed above.
+**Note:** Additional steps such as firewall rules have not been listed above.
 
 # Parameters
 
@@ -122,41 +122,34 @@ The main steps to be followed are listed below:
 | Name | Version |
 |------|---------|
 | google | ~> 3.7 |
+| http | ~> 1.1 |
 | random | ~> 2.2 |
-| template | ~> 2.1 |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
-| automation\_image | Automation image URI | `string` | n/a | yes |
 | business\_name | n/a | `string` | n/a | yes |
 | cost\_code | n/a | `string` | n/a | yes |
 | creator | Creator name | `string` | n/a | yes |
 | iam\_user\_email | IAM user email account | `string` | n/a | yes |
 | kms\_key | KMS key URI | `string` | n/a | yes |
-| mgmt\_source\_cidr | Management CIDR for remote access | `list(string)` | n/a | yes |
 | project\_id | Project ID to create resources | `string` | n/a | yes |
 | project\_name | n/a | `string` | n/a | yes |
 | project\_sponsor | n/a | `string` | n/a | yes |
 | project\_technical\_lead | n/a | `string` | n/a | yes |
 | region | Region to create resources | `string` | n/a | yes |
 | autohealing\_policies | n/a | <pre>list(object({<br>    initial_delay_sec = number<br>  }))</pre> | `[]` | no |
-| automation\_failover\_prefix | Automation name prefix | `string` | `"automation-failover"` | no |
 | automation\_prefix | Automation name prefix | `string` | `"automation"` | no |
-| automation\_startup\_filename | Metadata startup script | `string` | `"metadata_startup.sh"` | no |
-| boot\_disk\_size | Boot disk size | <pre>object({<br>    automation = number<br>    td-proxy   = number<br>  })</pre> | <pre>{<br>  "automation": 10,<br>  "td-proxy": 10<br>}</pre> | no |
-| boot\_disk\_type | Boot disk type | <pre>object({<br>    automation = string<br>    td-proxy   = string<br>  })</pre> | <pre>{<br>  "automation": "pd-standard",<br>  "td-proxy": "pd-standard"<br>}</pre> | no |
 | bucket\_prefix | Bucket name prefix | `string` | `"transfer"` | no |
 | compute\_service\_account\_prefix | Service account for compute instances | `string` | `"compute"` | no |
 | create\_nat\_gateway | Create nat gatway for internal servers | `bool` | `false` | no |
 | enable\_flow\_logs | Enable flow logging | `string` | `true` | no |
 | environment | Environment name | `string` | `"dev"` | no |
-| firewall\_rule\_prefix | Firewall rule prefix | `string` | `"remote-mgmt"` | no |
 | glb\_source\_cidrs | GLB ingress IP source cidrs | `list(string)` | <pre>[<br>  "130.211.0.0/22",<br>  "35.191.0.0/16"<br>]</pre> | no |
 | health\_check\_source\_cidrs | Health check cidrs | `list(string)` | <pre>[<br>  "35.191.0.0/16",<br>  "130.211.0.0/22"<br>]</pre> | no |
 | iap\_source\_cidrs | IAP cidrs | `list(string)` | <pre>[<br>  "35.235.240.0/20"<br>]</pre> | no |
-| machine\_type | Machine type | `map(string)` | <pre>{<br>  "automation": "n1-standard-1"<br>}</pre> | no |
+| mgmt\_source\_cidr | Management CIDR for remote access | `list(string)` | `[]` | no |
 | network\_cidr | Network CIDR | `string` | `"10.128.0.0/16"` | no |
 | router\_prefix | Router name prefix | `string` | `"rtr"` | no |
 | vpc\_prefix | VPC name prefix | `string` | `"vpc"` | no |

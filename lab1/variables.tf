@@ -55,68 +55,17 @@ variable "automation_prefix" {
   description = "Automation name prefix"
 }
 
-variable "automation_failover_prefix" {
-  type        = string
-  default     = "automation-failover"
-  description = "Automation name prefix"
-}
-
 variable "mgmt_source_cidr" {
   type        = list(string)
-  default     = null
+  default     = []
   description = "Management CIDR for remote access"
 }
 
-variable "firewall_rule_prefix" {
-  type        = string
-  default     = "remote-mgmt"
-  description = "Firewall rule prefix"
-}
-
-variable "automation_startup_filename" {
-  type        = string
-  default     = "metadata_startup.sh"
-  description = "Metadata startup script"
-}
-
-variable "machine_type" {
-  type = map(string)
-  default = {
-    automation : "n1-standard-1"
-  }
-  description = "Machine type"
-}
-
-variable "boot_disk_size" {
-  type = object({
-    automation = number
-    td-proxy   = number
-  })
-  default = {
-    automation = 10
-    td-proxy   = 10
-
-  }
-  description = "Boot disk size"
-}
-
-variable "boot_disk_type" {
-  type = object({
-    automation = string
-    td-proxy   = string
-  })
-  default = {
-    automation = "pd-standard"
-    td-proxy   = "pd-standard"
-  }
-  description = "Boot disk type"
-}
-
-variable "automation_image" {
-  type        = string
-  default     = null
-  description = "Automation image URI"
-}
+//variable "firewall_rule_prefix" {
+//  type        = string
+//  default     = "remote-mgmt"
+//  description = "Firewall rule prefix"
+//}
 
 variable "kms_key" {
   type        = string

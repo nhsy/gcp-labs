@@ -19,3 +19,7 @@ provider "random" {
 provider "template" {
   version = "~> 2.1"
 }
+
+provider "http" {
+  version = "~> 1.1"
+}

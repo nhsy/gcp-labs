@@ -53,3 +53,23 @@ resource "google_compute_firewall" "proxy_ingress_allow" {
   source_ranges = [module.private_subnet.ip_cidr_range]
   target_tags   = ["proxy"]
 }
+
+# allow SSH access to bastion
+resource "google_compute_firewall" "remote_ssh_ingress_allow" {
+  name        = "remote-ssh-${random_id.this.hex}"
+  network     = module.vpc.name
+  description = "Allow remote inbound SSH"
+  direction   = "INGRESS"
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  source_ranges = distinct(concat(var.mgmt_source_cidr, local.workstation_ip))
+  target_tags   = ["bastion"]
+}
