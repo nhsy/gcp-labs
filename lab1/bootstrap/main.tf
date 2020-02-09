@@ -1,7 +1,6 @@
 /**
-*# Bootstrap
-*
-*Refer to README.md in parent folder.
+* # Bootstrap
+* Refer to README.md in parent folder.
 *
 */
 
