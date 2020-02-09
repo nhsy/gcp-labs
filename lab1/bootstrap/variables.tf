@@ -54,3 +54,8 @@ variable "kms_crypto_key_prefix" {
   type    = string
   default = "kms-crypto"
 }
+
+variable "iam_user_email" {
+  type        = string
+  description = "IAM user email account"
+}

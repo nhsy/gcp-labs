@@ -180,3 +180,8 @@ variable "bucket_prefix" {
   default     = "transfer"
   description = "Bucket name prefix"
 }
+
+variable "iam_user_email" {
+  type        = string
+  description = "IAM user email account"
+}

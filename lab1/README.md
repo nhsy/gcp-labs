@@ -46,6 +46,7 @@ Make sure the following essential APIs are enabled on your project:
 gcloud services enable cloudkms.googleapis.com
 gcloud services enable compute.googleapis.com
 gcloud services enable iam.googleapis.com
+gcloud services enable iap.googleapis.com
 gcloud services enable storage-api.googleapis.com
 ```
 
