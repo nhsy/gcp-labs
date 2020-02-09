@@ -107,6 +107,7 @@ refresh: set-env prep
 	@echo "$@ ..."
 	@$(TERRAFORM_BIN) refresh \
 		-input=false \
+		-var-file="$(COMMON_TFVARS)" \
 		-var-file="$(WS_TFVARS)"
 
 update:
@@ -126,6 +127,17 @@ plan: set-env prep
 		-var-file="$(COMMON_TFVARS)" \
 		-var-file="$(WS_TFVARS)" \
 		-var kms_key="$(KMS_KEY)" \
+		-out=$(PLAN_FILE)
+
+plan-target: set-env prep
+	@echo "$@ ..."
+	@$(TERRAFORM_BIN) plan \
+		-input=false \
+		-refresh=true \
+		-var-file="$(COMMON_TFVARS)" \
+		-var-file="$(WS_TFVARS)" \
+		-var kms_key="$(KMS_KEY)" \
+		-target $(RESOURCE) \
 		-out=$(PLAN_FILE)
 
 apply: set-env prep
