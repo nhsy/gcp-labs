@@ -102,6 +102,9 @@ WS=dev2 make plan
 WS=dev2 make apply
 ```
 
+# Exercise
+Details of the lab exercise are detailed in EXERCISE.md
+
 # Parameters
 
 ## Providers
