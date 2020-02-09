@@ -48,6 +48,7 @@ Make sure the following essential APIs are enabled on your project:
 ```shell script
 for api in \
     cloudkms.googleapis.com \
+    cloudresourcemanager.googleapis.com \
     compute.googleapis.com \
     iam.googleapis.com \
     iap.googleapis.com \
@@ -112,6 +113,7 @@ Details of the lab exercise are detailed in [EXERCISE.md](EXERCISE.md).
 | Name | Version |
 |------|---------|
 | google | ~> 3.7 |
+| google.impersonate | ~> 3.7 |
 | http | ~> 1.1 |
 | random | ~> 2.2 |
 
@@ -119,24 +121,23 @@ Details of the lab exercise are detailed in [EXERCISE.md](EXERCISE.md).
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
+| automation\_service\_account | Automation service account | `string` | n/a | yes |
 | business\_name | n/a | `string` | n/a | yes |
 | cost\_code | n/a | `string` | n/a | yes |
 | creator | Creator name | `string` | n/a | yes |
-| iam\_user\_email | IAM user email account | `string` | n/a | yes |
+| impersonate\_user\_email | Impersonate user email | `string` | n/a | yes |
 | kms\_key | KMS key URI | `string` | n/a | yes |
 | project\_id | Project ID to create resources | `string` | n/a | yes |
 | project\_name | n/a | `string` | n/a | yes |
 | project\_sponsor | n/a | `string` | n/a | yes |
 | project\_technical\_lead | n/a | `string` | n/a | yes |
 | region | Region to create resources | `string` | n/a | yes |
-| autohealing\_policies | n/a | <pre>list(object({<br>    initial_delay_sec = number<br>  }))</pre> | `[]` | no |
-| automation\_prefix | Automation name prefix | `string` | `"automation"` | no |
 | bucket\_prefix | Bucket name prefix | `string` | `"transfer"` | no |
-| compute\_service\_account\_prefix | Service account for compute instances | `string` | `"compute"` | no |
 | create\_nat\_gateway | Create nat gatway for internal servers | `bool` | `false` | no |
 | enable\_flow\_logs | Enable flow logging | `string` | `true` | no |
 | environment | Environment name | `string` | `"dev"` | no |
-| glb\_source\_cidrs | GLB ingress IP source cidrs | `list(string)` | <pre>[<br>  "130.211.0.0/22",<br>  "35.191.0.0/16"<br>]</pre> | no |
+| gce\_service\_account\_prefix | GCE service account prefix | `string` | `"gce"` | no |
+| gce\_service\_account\_roles | GCE service account roles | `list(string)` | <pre>[<br>  "roles/logging.logWriter",<br>  "roles/monitoring.metricWriter",<br>  "roles/monitoring.viewer"<br>]</pre> | no |
 | health\_check\_source\_cidrs | Health check cidrs | `list(string)` | <pre>[<br>  "35.191.0.0/16",<br>  "130.211.0.0/22"<br>]</pre> | no |
 | iap\_source\_cidrs | IAP cidrs | `list(string)` | <pre>[<br>  "35.235.240.0/20"<br>]</pre> | no |
 | mgmt\_source\_cidr | Management CIDR for remote access | `list(string)` | `[]` | no |
@@ -148,6 +149,8 @@ Details of the lab exercise are detailed in [EXERCISE.md](EXERCISE.md).
 
 | Name | Description |
 |------|-------------|
+| automation\_service\_account | n/a |
+| impersonate\_service\_account | n/a |
 | labels | n/a |
 | private\_subnet\_ip\_cidr\_range | n/a |
 | private\_subnet\_name | n/a |

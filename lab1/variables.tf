@@ -49,23 +49,11 @@ variable "creator" {
   description = "Creator name"
 }
 
-variable "automation_prefix" {
-  type        = string
-  default     = "automation"
-  description = "Automation name prefix"
-}
-
 variable "mgmt_source_cidr" {
   type        = list(string)
   default     = []
   description = "Management CIDR for remote access"
 }
-
-//variable "firewall_rule_prefix" {
-//  type        = string
-//  default     = "remote-mgmt"
-//  description = "Firewall rule prefix"
-//}
 
 variable "kms_key" {
   type        = string
@@ -84,10 +72,10 @@ variable "health_check_source_cidrs" {
   description = "Health check cidrs"
 }
 
-variable "compute_service_account_prefix" {
+variable "gce_service_account_prefix" {
   type        = string
-  default     = "compute"
-  description = "Service account for compute instances"
+  default     = "gce"
+  description = "GCE service account prefix"
 }
 
 variable "project_name" {
@@ -110,26 +98,28 @@ variable "project_technical_lead" {
   type = string
 }
 
-variable "autohealing_policies" {
-  type = list(object({
-    initial_delay_sec = number
-  }))
-  default = []
-}
-
-variable "glb_source_cidrs" {
-  type        = list(string)
-  default     = ["130.211.0.0/22", "35.191.0.0/16"]
-  description = "GLB ingress IP source cidrs"
-}
-
 variable "bucket_prefix" {
   type        = string
   default     = "transfer"
   description = "Bucket name prefix"
 }
 
-variable "iam_user_email" {
+variable "impersonate_user_email" {
   type        = string
-  description = "IAM user email account"
+  description = "Impersonate user email"
+}
+
+variable "automation_service_account" {
+  type        = string
+  description = "Automation service account"
+}
+
+variable "gce_service_account_roles" {
+  type        = list(string)
+  description = "GCE service account roles"
+  default = [
+    "roles/logging.logWriter",
+    "roles/monitoring.metricWriter",
+    "roles/monitoring.viewer"
+  ]
 }

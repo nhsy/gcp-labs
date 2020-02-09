@@ -19,7 +19,6 @@ In addition to the above bear in mind the following:
 ## Instructions
 An outline of the main steps are listed below:
 
-1. Create VPC with DMZ and Private subnets
 1. Create bastion instance
 1. Create proxy managed instance group
 1. Create internal load balancer for proxy managed instance group
@@ -29,5 +28,5 @@ An outline of the main steps are listed below:
 
 ## Constraints
 * Centos 7.x operating system
-* No Public IP addresses in the private subnet
+* No usage of Public IP addresses in the private subnet
 * No usage of Cloud NAT

@@ -9,11 +9,10 @@ module "project_services" {
 
   activate_apis = [
     "cloudkms.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
     "compute.googleapis.com",
     "iam.googleapis.com",
     "iap.googleapis.com",
     "storage-api.googleapis.com"
   ]
 }
-
-

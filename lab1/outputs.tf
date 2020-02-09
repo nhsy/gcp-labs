@@ -25,3 +25,11 @@ output "public_subnet_ip_cidr_range" {
 output "transfer_bucket_name" {
   value = google_storage_bucket.transfer.name
 }
+
+output "automation_service_account" {
+  value = var.automation_service_account
+}
+
+output "impersonate_service_account" {
+  value = data.google_client_openid_userinfo.default.email
+}

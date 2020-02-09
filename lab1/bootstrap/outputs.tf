@@ -26,3 +26,7 @@ output "project_name" {
 output "compute_default_service_account" {
   value = data.google_compute_default_service_account.default.email
 }
+
+output "automation_service_account" {
+  value = google_service_account.automation.email
+}

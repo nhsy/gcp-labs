@@ -1,6 +1,6 @@
 /**
 * # Bootstrap
-* Refer to README.md in parent folder.
+* Refer to [README.md](../README.md) in the parent folder.
 *
 */
 
@@ -29,31 +29,9 @@ module "labels" {
   review_date            = replace(substr(timeadd(timestamp(), "168h"), 0, 10), "-", "")
 }
 
-###
-# Create GCS bucket for terraform state
-###
-resource "google_storage_bucket" "terraform" {
-  name               = local.bucket_name
-  bucket_policy_only = true
-  force_destroy      = true
-  labels             = module.labels.rendered
-  location           = var.region
-
-  encryption {
-    default_kms_key_name = google_kms_crypto_key.crypto_key.self_link
-  }
-
-  versioning {
-    enabled = true
-  }
-
-  lifecycle {
-    ignore_changes = [labels]
-  }
-}
-
 locals {
-  bucket_name       = "${var.bucket_prefix}-${var.environment}-${random_id.this.hex}"
-  kms_key_ring_name = "${var.kms_key_ring_prefix}-${random_id.this.hex}"
-  kms_crypto_name   = "${var.kms_crypto_key_prefix}-${random_id.this.hex}"
+  automation_service_account_id = format("%s-%s", var.automation_service_account_prefix, random_id.this.hex)
+  bucket_name                   = "${var.bucket_prefix}-${var.environment}-${random_id.this.hex}"
+  kms_key_ring_name             = "${var.kms_key_ring_prefix}-${random_id.this.hex}"
+  kms_crypto_name               = "${var.kms_crypto_key_prefix}-${random_id.this.hex}"
 }
