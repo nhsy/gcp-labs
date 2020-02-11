@@ -1,6 +1,6 @@
 # gcp-labs
 
-The gcp lab exercises aim to provide familiarisation with the gcp cloud environment.
+The lab exercises aim to provide familiarisation with the gcp cloud environment.
 
 # Development Environment
 Preferred software and platform are described below.
@@ -27,4 +27,4 @@ Terraform requires one of the authentication methods below setup:
 * gcloud auth application-default login
 
 # Labs
-* [Lab1 ](lab1) - Segregated Environment
+* [Lab 1](lab1) - Segregated Environment
